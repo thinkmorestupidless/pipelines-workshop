@@ -1,0 +1,15 @@
+{
+  "namespace": "pipelines.workshop.creditcards.schema",
+  "type": "record",
+  "name": "PaymentAggregation",
+  "fields":[
+    {
+      "name": "time",
+      "type": "float"
+    },
+    {
+      "name": "total",
+      "type": "float"
+    }
+  ]
+}

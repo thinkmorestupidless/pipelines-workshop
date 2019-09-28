@@ -50,6 +50,16 @@ lazy val pipeline = (project in file("./pipeline"))
   .settings(commonSettings)
   .dependsOn(`akka-streams`, spark)
 
+lazy val `data-generator` = (project in file("./data-generator"))
+  .settings(
+    mainClass := Some("com.lightbend.fraud.gen.Main"),
+    libraryDependencies ++= Seq(
+      "com.typesafe.akka" %% "akka-stream" % "2.5.25",
+      playJson,
+      "org.slf4j" % "slf4j-simple" % "1.7.28"
+    )
+  )
+
 lazy val commonScalacOptions = Seq(
     "-encoding", "UTF-8",
     "-target:jvm-1.8",
