@@ -1,0 +1,47 @@
+{
+  "namespace": "pipelines.workshop.creditcards.schema",
+  "type": "record",
+  "name": "CustomerSpendAgg",
+  "fields":[
+    {
+      "name": "year",
+      "type": "int"
+    },
+    {
+      "name": "month",
+      "type": "int"
+    },
+    {
+      "name": "day",
+      "type": "int"
+    },
+    {
+      "name": "hour",
+      "type": "int"
+    },
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "amountMin",
+      "type": "double"
+    },
+    {
+      "name": "amountMax",
+      "type": "double"
+    },
+    {
+      "name": "amountAvg",
+      "type": "double"
+    },
+    {
+      "name": "amountVar",
+      "type": "double"
+    },
+    {
+      "name": "amountStDev",
+      "type": "double"
+    }
+  ]
+}
