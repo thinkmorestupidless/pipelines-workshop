@@ -23,6 +23,6 @@ object CardPaymentGeneratorIngress extends AkkaStreamlet {
     override def runnableGraph() =
       Source.repeat(NotUsed)
         .map { _ ⇒ CardPayment(1.toLong, "", "", "", 1.0) }
-        .to(atLeastOnceSink(outlet))
+        .to(atMostOnceSink(outlet))
   }
 }
