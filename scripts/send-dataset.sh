@@ -8,7 +8,7 @@ else
   RESOURCE="$1"
 fi
 
-DEFAULT_ROUTE_HOST="http://localhost:3001"
+DEFAULT_ROUTE_HOST="http://localhost:3002"
 if [ "$2" == "" ]
 then
   ROUTE_HOST=$DEFAULT_ROUTE_HOST

@@ -11,7 +11,7 @@ import pipelines.workshop.creditcards.schema.CardPayment
 
 object CardPaymentHttpIngress extends AkkaServerStreamlet {
 
-  val out = AvroOutlet[CardPayment]("out")
+  val out = AvroOutlet[CardPayment]("out", payment ⇒ payment.customerId)
   val shape = StreamletShape.withOutlets(out)
 
   override protected def createLogic(): StreamletLogic =

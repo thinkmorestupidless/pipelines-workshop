@@ -11,4 +11,5 @@ resolvers += Resolver.url("lightbend-commercial", url("https://repo.lightbend.co
 resolvers += "Akka Snapshots" at "https://repo.akka.io/snapshots/"
 
 //addSbtPlugin("com.lightbend.pipelines" % "sbt-pipelines" % "1.1.0")
-addSbtPlugin("com.lightbend.pipelines" % "sbt-pipelines" % "1.1.1-1227-7400c77e")
+addSbtPlugin("com.lightbend.pipelines" % "sbt-pipelines" % "1.1.1-1237-48cb75ec")
+

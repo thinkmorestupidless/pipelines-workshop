@@ -13,7 +13,7 @@ import pipelines.workshop.creditcards.schema.{ CardPayment, CustomerSpendAgg }
 object CustomerSpendAggregation extends SparkStreamlet {
 
   val inlet = AvroInlet[CardPayment]("in")
-  val outlet = AvroOutlet[CustomerSpendAgg]("out")
+  val outlet = AvroOutlet[CustomerSpendAgg]("out", payment ⇒ payment.customerId)
 
   val shape = StreamletShape(inlet, outlet)
 

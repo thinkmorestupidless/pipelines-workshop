@@ -41,8 +41,7 @@ lazy val pipeline = (project in file("./pipeline"))
   .settings(
     name := s"pipelines-workshop-$user",
     version := thisVersion,
-    runLocalConfigFile := Some("pipeline/src/main/blueprint/blueprint.conf"),
-    pipelinesDockerRegistry := Some("docker-registry-default.fiorano.lightbend.com"),
+//    runLocalConfigFile := Some("pipeline/src/main/blueprint/blueprint.conf"),
     libraryDependencies ++= Seq(akkaSprayJson, scalaTest),
     avroSpecificSourceDirectories in Compile ++=
       Seq(new java.io.File("schemae/src/main/avro"))
