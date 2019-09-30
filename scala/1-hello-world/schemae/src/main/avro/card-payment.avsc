@@ -1,0 +1,31 @@
+{
+  "namespace": "pipelines.workshop.schema",
+  "type": "record",
+  "name": "CardPayment",
+  "fields":[
+    {
+      "name": "timestamp",
+      "type": "long"
+    },
+    {
+      "name": "countryCode",
+      "type": "string"
+    },
+    {
+      "name": "customerId",
+      "type": "string"
+    },
+    {
+      "name": "deviceId",
+      "type": "string"
+    },
+    {
+      "name": "merchantId",
+      "type": "string"
+    },
+    {
+      "name": "amount",
+      "type": "double"
+    }
+  ]
+}
