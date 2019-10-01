@@ -9,21 +9,26 @@ fork := true
 
 val user = sys.props.getOrElse("user.name", "unknown-user")
 
-lazy val `pipelines-workshop-scala` = (project in file("."))
-  .aggregate(`schemae-scala`, `akka-streams-scala`, `spark-scala`, `pipeline-scala`)
+lazy val `pipelines-workshop-java` = (project in file("."))
+  .aggregate(`schemae-java`, `akka-streams-java`, `spark-java`, `pipeline-java`)
 
-lazy val `schemae-scala` = (project in file("./schemae"))
+lazy val `schemae-java` = (project in file("./schemae"))
   .enablePlugins(PipelinesLibraryPlugin)
+  .settings(
+    commonSettings,
+    schemaCodeGenerator := SchemaCodeGenerator.Java,
+    libraryDependencies ++= Seq(junit, junitInterface)
+  )
 
-lazy val `akka-streams-scala` = (project in file("./akka-streams"))
+lazy val `akka-streams-java` = (project in file("./akka-streams"))
   .enablePlugins(PipelinesAkkaStreamsLibraryPlugin)
   .settings(
     commonSettings,
-    libraryDependencies ++= Seq(akkaHttpSprayJson, scalaTest)
+    libraryDependencies ++= Seq(junit, junitInterface, scalaTest)
   )
-  .dependsOn(`schemae-scala`)
+  .dependsOn(`schemae-java`)
 
-lazy val `spark-scala` = (project in file("./spark"))
+lazy val `spark-java` = (project in file("./spark"))
   .enablePlugins(PipelinesSparkLibraryPlugin)
   .settings(
     commonSettings,
@@ -31,9 +36,9 @@ lazy val `spark-scala` = (project in file("./spark"))
     Test / fork := true,
     libraryDependencies ++= Seq(scalaTest)
   )
-  .dependsOn(`schemae-scala`)
+  .dependsOn(`schemae-java`)
 
-lazy val `pipeline-scala` = (project in file("./pipeline"))
+lazy val `pipeline-java` = (project in file("./pipeline"))
   .enablePlugins(PipelinesApplicationPlugin)
   .enablePlugins(PipelinesAkkaStreamsLibraryPlugin)
   .settings(
@@ -45,7 +50,7 @@ lazy val `pipeline-scala` = (project in file("./pipeline"))
       Seq(new java.io.File("schemae/src/main/avro"))
   )
   .settings(commonSettings)
-  .dependsOn(`akka-streams-scala`, `spark-scala`)
+  .dependsOn(`akka-streams-java`, `spark-java`)
 
 lazy val `data-generator` = (project in file("./data-generator"))
   .settings(

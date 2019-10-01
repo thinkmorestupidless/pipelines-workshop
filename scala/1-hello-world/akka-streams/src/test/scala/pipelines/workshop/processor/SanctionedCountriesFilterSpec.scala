@@ -7,7 +7,7 @@ import akka.stream._
 import akka.stream.scaladsl._
 import akka.testkit._
 import org.scalatest._
-import pipelines.akkastream.testkit._
+import pipelines.akkastream.testkit.scaladsl.{AkkaStreamletTestKit, Completed}
 import pipelines.workshop.schema.CardPayment
 
 class SanctionedCountriesFilterSpec extends WordSpec with MustMatchers with BeforeAndAfterAll {
