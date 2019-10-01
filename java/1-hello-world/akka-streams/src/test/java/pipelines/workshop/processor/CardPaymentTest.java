@@ -1,20 +1,19 @@
-package pipelines.workshop.schema;
+package pipelines.workshop.processor;
 
 import akka.actor.ActorSystem;
-import akka.http.javadsl.common.EntityStreamingSupport;
 import akka.http.javadsl.marshallers.jackson.Jackson;
 import akka.http.javadsl.unmarshalling.Unmarshaller;
 import akka.stream.ActorMaterializer;
 import akka.stream.Materializer;
 import akka.util.ByteString;
 import junit.framework.TestCase;
+import pipelines.workshop.schema.CardPayment;
 
 import java.util.concurrent.CompletableFuture;
 
 public class CardPaymentTest extends TestCase {
 
     public void testUnmarshalling() throws Exception {
-        EntityStreamingSupport ess = EntityStreamingSupport.json();
         ActorSystem system = ActorSystem.create("Test-System");
         Materializer mat = ActorMaterializer.create(system);
 
