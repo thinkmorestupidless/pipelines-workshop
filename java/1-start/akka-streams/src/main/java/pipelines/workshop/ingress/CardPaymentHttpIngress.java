@@ -2,6 +2,7 @@ package pipelines.workshop.ingress;
 
 import akka.http.javadsl.common.EntityStreamingSupport;
 import akka.http.javadsl.marshallers.jackson.Jackson;
+import akka.http.javadsl.unmarshalling.Unmarshaller;
 import pipelines.akkastream.AkkaServerStreamlet;
 import pipelines.akkastream.StreamletLogic;
 import pipelines.akkastream.util.javadsl.HttpServerLogic;
@@ -21,6 +22,7 @@ public class CardPaymentHttpIngress extends AkkaServerStreamlet {
     @Override
     public StreamletLogic createLogic() {
         EntityStreamingSupport ess = EntityStreamingSupport.json();
-        return HttpServerLogic.createDefaultStreaming(this, outlet, Jackson.byteStringUnmarshaller(CardPayment.class), ess, getStreamletContext());
+        Unmarshaller unmarshaller = Jackson.byteStringUnmarshaller(CardPaymentJson.class).thenApply(cpj -> cpj.toCardPayment());
+        return HttpServerLogic.createDefaultStreaming(this, outlet, unmarshaller, ess, getStreamletContext());
     }
 }
