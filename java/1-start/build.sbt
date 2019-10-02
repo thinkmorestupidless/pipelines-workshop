@@ -15,8 +15,7 @@ lazy val `pipelines-workshop-java` = (project in file("."))
 lazy val `schema-java` = (project in file("./schema-java"))
   .enablePlugins(PipelinesLibraryPlugin)
   .settings(
-    commonSettings,
-    schemaCodeGenerator := SchemaCodeGenerator.Java
+    commonSettings
   )
 
 lazy val `schema-scala` = (project in file("./schema-scala"))
