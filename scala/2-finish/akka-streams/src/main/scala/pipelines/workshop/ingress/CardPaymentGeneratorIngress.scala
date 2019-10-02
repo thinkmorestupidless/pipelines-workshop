@@ -11,6 +11,7 @@ import pipelines.streamlets.StreamletShape
 import pipelines.streamlets.avro.AvroOutlet
 import pipelines.workshop.schema.CardPayment
 
+import scala.concurrent.duration._
 import scala.util.Random
 
 case class Customer(id: UUID, devices: List[UUID])
@@ -22,6 +23,14 @@ object CardPaymentGeneratorIngress extends AkkaStreamlet {
 
   override protected def createLogic(): StreamletLogic = new RunnableGraphStreamletLogic() {
 
+    val merchants = generateUUIDs(1000)
+    val customers = generateCustomers(10000)
+
+    override def runnableGraph() =
+      Source.tick(0 seconds, 10 milliseconds, NotUsed)
+        .map { _ ⇒ generatePayment() }
+        .to(atMostOnceSink(outlet))
+
     def generateUUIDs(n: Int): List[UUID] = {
       (1 to n).map { _ ⇒
         UUID.randomUUID()
@@ -30,7 +39,7 @@ object CardPaymentGeneratorIngress extends AkkaStreamlet {
 
     def generateCustomers(n: Int): List[Customer] = {
       (1 to n).map { _ ⇒
-        Customer(UUID.randomUUID(), generateUUIDs(Random.nextInt(3)))
+        Customer(UUID.randomUUID(), generateUUIDs(Random.nextInt(3) + 1))
       }.toList
     }
 
@@ -42,14 +51,6 @@ object CardPaymentGeneratorIngress extends AkkaStreamlet {
         .atZone(ZoneId.of("GMT"))
         .toInstant
         .toEpochMilli
-
-    val merchants = generateUUIDs(1000)
-    val customers = generateCustomers(10000)
-
-    override def runnableGraph() =
-      Source.repeat(NotUsed)
-        .map { _ ⇒ generatePayment() }
-        .to(atMostOnceSink(outlet))
 
     def generatePayment() = {
       val customer = customers(Random.nextInt(customers.size))

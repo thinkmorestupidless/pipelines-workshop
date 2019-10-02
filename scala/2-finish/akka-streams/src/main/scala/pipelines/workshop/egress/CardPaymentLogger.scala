@@ -15,7 +15,7 @@ object CardPaymentLogger extends AkkaStreamlet {
   override protected def createLogic(): StreamletLogic = new RunnableGraphStreamletLogic() {
 
     val flow = FlowWithPipelinesContext[CardPayment].map { cp ⇒
-      system.log.info("Hello, Card Payment! " + cp.toString)
+      system.log.info("Sanction Payment! " + cp.toString)
       cp
     }
 

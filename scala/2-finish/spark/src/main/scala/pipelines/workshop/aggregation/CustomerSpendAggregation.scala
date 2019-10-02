@@ -12,14 +12,14 @@ import pipelines.workshop.schema.{ CardPayment, CustomerSpendAgg }
 
 class CustomerSpendAggregation extends SparkStreamlet {
 
-  val inlet = AvroInlet[CardPayment]("in")
+  val in = AvroInlet[CardPayment]("in")
   val outlet = AvroOutlet[CustomerSpendAgg]("out", payment ⇒ payment.customerId)
 
-  val shape = StreamletShape(inlet, outlet)
+  val shape = StreamletShape(in, outlet)
 
   override protected def createLogic(): SparkStreamletLogic = new SparkStreamletLogic() {
     override def buildStreamingQueries: StreamletQueryExecution = {
-      val dataset = readStream(inlet)
+      val dataset = readStream(in)
       val outStream = process(dataset)
       writeStream(outStream, outlet, OutputMode.Update()).toQueryExecution
     }
