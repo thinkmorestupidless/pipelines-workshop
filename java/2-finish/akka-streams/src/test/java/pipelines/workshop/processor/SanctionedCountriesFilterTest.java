@@ -1,5 +1,9 @@
 package pipelines.workshop.processor;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import scala.collection.JavaConversions;
+
 import akka.actor.ActorSystem;
 import akka.stream.ActorMaterializer;
 import akka.testkit.TestKit;
@@ -53,9 +57,10 @@ public class SanctionedCountriesFilterTest extends JUnitSuite {
         in.queue().offer(p2);
 
         // 5. Run the streamlet using the testkit and the setup inlet taps and outlet probes
-        testkit.<CardPayment>run(streamlet, in, manual, () -> {
+        java.util.List outlets = Arrays.asList(new ProbeOutletTap[]{manual, auto});
+        testkit.<CardPayment>run(streamlet, in, JavaConversions.asScalaBuffer(outlets).toList(), () -> {
             // 6. Assert
-            return manual.probe().expectMsg(new scala.Tuple2<String, CardPayment>("RU", p2));
+            return manual.probe().expectMsg(new akka.japi.Pair<String, CardPayment>("RU", p2));
         });
 
         // 6. Assert
