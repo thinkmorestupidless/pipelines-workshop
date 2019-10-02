@@ -14,8 +14,8 @@ import pipelines.workshop.schema.java.CardPayment;
 public class SanctionedCountriesFilter extends AkkaStreamlet {
 
     AvroInlet<CardPayment> inlet = AvroInlet.<CardPayment>create("in", CardPayment.class);
-    AvroOutlet<CardPayment> manualOutlet = AvroOutlet.<CardPayment>create("manual", CardPayment::getCountryCode, CardPayment.class);
-    AvroOutlet<CardPayment> automaticOutlet = AvroOutlet.<CardPayment>create("auto", CardPayment::getCustomerId, CardPayment.class);
+    AvroOutlet<CardPayment> manualOutlet = AvroOutlet.<CardPayment>create("manual", CardPayment::countryCode, CardPayment.class);
+    AvroOutlet<CardPayment> automaticOutlet = AvroOutlet.<CardPayment>create("auto", CardPayment::customerId, CardPayment.class);
 
     @Override
     public StreamletShape shape() {
@@ -31,7 +31,7 @@ public class SanctionedCountriesFilter extends AkkaStreamlet {
             }
 
             Either<CardPayment, CardPayment> checkForSanctions(CardPayment payment) {
-                if (payment.getCountryCode().equals("RU")) {
+                if (payment.countryCode().equals("RU")) {
                     return Either.left(payment);
                 } else {
                     return Either.right(payment);
